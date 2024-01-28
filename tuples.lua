@@ -26,4 +26,12 @@ function tuples.negate(a)
 	return tuples.tuple(- a.x, -a.y, -a.z, -a.w)
 end
 
+function tuples.multiply(a, num)
+	return tuples.tuple(a.x * num, a.y * num, a.z * num, a.w * num)
+end
+
+function tuples.divide(a, num)
+	return tuples.tuple(a.x / num, a.y / num, a.z / num, a.w / num)
+end
+
 return tuples

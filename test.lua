@@ -5,6 +5,8 @@ local add = tuples.add
 local subtract = tuples.subtract
 local vector = tuples.vector
 local negate = tuples.negate
+local multiply = tuples.multiply
+local divide = tuples.divide
 local say = require("say")
 local assertions = require("./assertions")
 local num_eq = assertions.num_eq
@@ -107,5 +109,31 @@ describe('Tuple features:', function()
 		local result = negate(t)
 		assert.tuple_eq(result, tuple(-1, 2, -3, 4))
 	end)
+
+  describe('Multiplying a tuple', function()
+    it('by a scalar', function()
+      t = tuple(1, -2, 3, -4)
+
+      local result = multiply(t, 3.5)
+      assert.tuple_eq(result, tuple(3.5, -7, 10.5, -14))
+    end)
+
+    it('by a fraction', function()
+      t = tuple(1, -2, 3, -4)
+
+      local result = multiply(t, 0.5)
+      assert.tuple_eq(result, tuple(0.5, -1, 1.5, -2))
+    end)
+  end)
+
+  describe('Dividing a tuple', function()
+    it('by a scalar', function()
+      t = tuple(1, -2, 3, -4)
+
+      local result = divide(t, 2)
+      assert.tuple_eq(result, tuple(0.5, -1, 1.5, -2))
+    end)
+  end)
+
 end)
 
