@@ -43,4 +43,18 @@ function tuples.magnitude(t)
 	return sqrt(t.x^2 + t.y^2 + t.z^2 + t.w^2)
 end
 
+function tuples.normalize(t)
+  local magnitude = tuples.magnitude(t)
+  return tuples.tuple(
+    t.x / magnitude, 
+    t.y / magnitude,
+    t.z / magnitude,
+    t.w / magnitude
+    )
+end
+
+function tuples.dot(a, b) 
+  return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
+end
+
 return tuples

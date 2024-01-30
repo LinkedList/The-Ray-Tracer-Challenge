@@ -8,6 +8,8 @@ local negate = tuples.negate
 local multiply = tuples.multiply
 local divide = tuples.divide
 local magnitude = tuples.magnitude
+local normalize = tuples.normalize
+local dot = tuples.dot
 local say = require("say")
 local assertions = require("./assertions")
 local num_eq = assertions.num_eq
@@ -150,5 +152,29 @@ describe('Tuple features:', function()
     end)
   end)
 
+  describe('Normalizing a vector', function()
+    it('vector(4, 0, 0)', function()
+      local v = vector(4, 0, 0)
+
+      local result = normalize(v)
+      assert.tuple_eq(result, vector(1, 0, 0))
+    end)
+
+    it('vector(1, 2, 3)', function()
+      local v = vector(1, 2, 3)
+
+      local result = normalize(v)
+      assert.tuple_eq(result, vector(1/sqrt(14), 2/sqrt(14), 3/sqrt(14)))
+    end)
+  end)
+
+  describe('Dot product', function()
+    it('of two tuples', function()
+      local a = vector(1, 2, 3)
+      local b = vector(2, 3, 4)
+
+      assert.are.same(dot(a, b), 20)
+    end)
+  end)
 end)
 
