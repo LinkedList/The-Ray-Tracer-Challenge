@@ -7,10 +7,12 @@ local vector = tuples.vector
 local negate = tuples.negate
 local multiply = tuples.multiply
 local divide = tuples.divide
+local magnitude = tuples.magnitude
 local say = require("say")
 local assertions = require("./assertions")
 local num_eq = assertions.num_eq
 local tuple_eq = assertions.tuple_eq
+local sqrt = math.sqrt
 
 say:set("assertion.num_eq.positive", "Expected %s \nto be equal: %s")
 say:set("assertion.num_eq.negative", "Expected %s \nto not be equal: %s")
@@ -132,6 +134,19 @@ describe('Tuple features:', function()
 
       local result = divide(t, 2)
       assert.tuple_eq(result, tuple(0.5, -1, 1.5, -2))
+    end)
+  end)
+
+  describe('Computing a magnitude', function()
+    it('of unit vectors', function()
+      assert.are.same(magnitude(vector(1, 0, 0)), 1)
+      assert.are.same(magnitude(vector(0, 1, 0)), 1)
+      assert.are.same(magnitude(vector(0, 0, 1)), 1)
+    end)
+
+    it('of non-unit vectors', function()
+      assert.are.same(magnitude(vector(1, 2, 3)), sqrt(14))
+      assert.are.same(magnitude(vector(-1, -2, -3)), sqrt(14))
     end)
   end)
 

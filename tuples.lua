@@ -1,4 +1,5 @@
 local tuples = {}
+local sqrt = math.sqrt
 
 function tuples.tuple(x, y, z, w)
 	local isPoint = w == 1.0
@@ -32,6 +33,14 @@ end
 
 function tuples.divide(a, num)
 	return tuples.tuple(a.x / num, a.y / num, a.z / num, a.w / num)
+end
+
+function tuples.magnitude(t)
+  if not t.w == 1 then
+    return 0
+  end
+
+	return sqrt(t.x^2 + t.y^2 + t.z^2 + t.w^2)
 end
 
 return tuples
