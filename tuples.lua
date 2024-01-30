@@ -57,4 +57,12 @@ function tuples.dot(a, b)
   return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
 end
 
+function tuples.cross(a, b) 
+  return tuples.vector(
+    a.y * b.z - a.z * b.y,
+    a.z * b.x - a.x * b.z,
+    a.x * b.y - a.y * b.x
+  )
+end
+
 return tuples

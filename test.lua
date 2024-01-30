@@ -10,6 +10,7 @@ local divide = tuples.divide
 local magnitude = tuples.magnitude
 local normalize = tuples.normalize
 local dot = tuples.dot
+local cross = tuples.cross
 local say = require("say")
 local assertions = require("./assertions")
 local num_eq = assertions.num_eq
@@ -169,11 +170,21 @@ describe('Tuple features:', function()
   end)
 
   describe('Dot product', function()
-    it('of two tuples', function()
+    it('of two vectors', function()
       local a = vector(1, 2, 3)
       local b = vector(2, 3, 4)
 
       assert.are.same(dot(a, b), 20)
+    end)
+  end)
+
+  describe('Cross product', function()
+    it('of two vectors', function()
+      local a = vector(1, 2, 3)
+      local b = vector(2, 3, 4)
+
+      assert.tuple_eq(cross(a, b), vector(-1, 2, -1))
+      assert.tuple_eq(cross(b, a), vector(1, -2, 1))
     end)
   end)
 end)
