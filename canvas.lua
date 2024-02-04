@@ -41,7 +41,7 @@ function scale(num)
 end
 
 function newStack ()
-  return {""}   -- starts with an empty string
+  return {}
 end
 
 function addString (stack, s)
