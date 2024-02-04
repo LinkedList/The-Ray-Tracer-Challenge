@@ -67,10 +67,35 @@ describe("Creating a canvas", function()
     local ppm = canvas_to_ppm(c)
     local ppm_lines = lines(ppm)
 
-    print(inspect(ppm_lines))
-
     assert.same(ppm_lines[4], '255 0 0 0 0 0 0 0 0 0 0 0 0 0 0')
     assert.same(ppm_lines[5], '0 0 0 0 0 0 0 128 0 0 0 0 0 0 0')
     assert.same(ppm_lines[6], '0 0 0 0 0 0 0 0 0 0 0 0 0 0 255')
+  end)
+
+  it('Splitting long lines in ppm files', function()
+    local c = canvas(10, 2)
+    local c1 = color(1, 0.8, 0.6)
+
+    for y = 1,2 do
+      for x = 1,10 do
+        write_pixel(c, x, y, c1)
+      end
+    end
+
+    local ppm = canvas_to_ppm(c)
+    local ppm_lines = lines(ppm)
+
+    assert.same(ppm_lines[4], '255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204')
+    assert.same(ppm_lines[5], '153 255 204 153 255 204 153 255 204 153 255 204 153')
+    assert.same(ppm_lines[6], '255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204')
+    assert.same(ppm_lines[7], '153 255 204 153 255 204 153 255 204 153 255 204 153')
+  end)
+
+  it('PPM files are terminated by a newline character', function()
+    local c = canvas(5, 3)
+
+    local ppm = canvas_to_ppm(c)
+
+    assert.is_not.Nil(ppm:match("\n\n$"))
   end)
 end)

@@ -2,6 +2,7 @@ local module = {}
 local color_module = require("./colors")
 local color = color_module.color
 local floor = require('math').floor
+local mod = require('math').mod
 
 function module.canvas(width, height) 
   mt = {}          -- create the matrix
@@ -51,13 +52,22 @@ function module.canvas_to_ppm(canvas)
       local red = scale(pixel.red)
       local green = scale(pixel.green)
       local blue = scale(pixel.blue)
-      buffer = buffer .. red .. ' ' .. green .. ' ' .. blue
+      
+      if x % 6 == 0 then
+        buffer = buffer .. red .. ' ' .. green .. '\n' .. blue
+      else
+        buffer = buffer .. red .. ' ' .. green .. ' ' .. blue
+      end
+
       
       if x ~= width then buffer = buffer .. ' ' end
     end
 
     buffer = buffer .. '\n'
   end
+
+  -- new line at the end of file
+  buffer = buffer .. '\n'
 
   return buffer
 end
