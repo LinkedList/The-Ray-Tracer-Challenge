@@ -10,3 +10,6 @@ Tools and libraries used:
 Todo:
  - [ ] Operator overloading for add, multiply, subtract, divide
  - [ ] Common custom assertions + assertion setup for specs
+
+Generated images:
+![projectile](images/projectile.png)

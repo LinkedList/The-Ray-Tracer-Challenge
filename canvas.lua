@@ -3,6 +3,7 @@ local color_module = require("./colors")
 local color = color_module.color
 local floor = require('math').floor
 local mod = require('math').mod
+local inspect = require('inspect')
 
 function module.canvas(width, height) 
   mt = {}          -- create the matrix
@@ -39,37 +40,61 @@ function scale(num)
   return math.floor(n * 255 + 0.5) 
 end
 
+function newStack ()
+  return {""}   -- starts with an empty string
+end
+
+function addString (stack, s)
+  table.insert(stack, s)    -- push 's' into the the stack
+end
+
+function num_char_len(num)
+  if num < 10 then return 1 end
+  if num < 100 then return 2 end
+  return 3
+end
+
 function module.canvas_to_ppm(canvas)
-  -- naive and stupid building for now
   local width = module.getWidth(canvas)
   local height = module.getHeight(canvas)
-  local buffer = 'P3\n'
-  buffer = buffer .. width .. ' ' .. height .. '\n'
-  buffer = buffer .. '255\n'
 
+  local s = newStack()
+
+  addString(s, 'P3')
+  local size = width .. ' ' .. height
+  addString(s, size)
+  addString(s, '255')
+  
+  local length = 0;
+  local values = {}
   for y, line in pairs(canvas) do
     for x, pixel in pairs(line) do
       local red = scale(pixel.red)
       local green = scale(pixel.green)
       local blue = scale(pixel.blue)
-      
-      if x % 6 == 0 then
-        buffer = buffer .. red .. ' ' .. green .. '\n' .. blue
-      else
-        buffer = buffer .. red .. ' ' .. green .. ' ' .. blue
-      end
+      local colors = {red, green, blue}
 
-      
-      if x ~= width then buffer = buffer .. ' ' end
+      for _, color in pairs(colors) do
+        if length + num_char_len(color) > 70 then
+          addString(s, table.concat(values, ' '))
+          length = 0
+          values = {}
+        end
+
+        table.insert(values, color)
+        -- adding +1 for empty space after 
+        length = length + num_char_len(color) + 1
+      end
     end
 
-    buffer = buffer .. '\n'
+    addString(s, table.concat(values, ' '))
+    values = {}
+    length = 0
   end
 
+  table.insert(s, '\n')
   -- new line at the end of file
-  buffer = buffer .. '\n'
-
-  return buffer
+  return table.concat(s, '\n')
 end
 
 return module
