@@ -35,4 +35,16 @@ describe("Constructing and inspecting a matrix", function()
     assert.num_eq(m[2][1], 1)
     assert.num_eq(m[2][2], -2)
   end)
+
+  it("we should be able to construct a 3x3 matrix", function()
+    local m = {
+      {-3, 5, 0},
+      {1 , -2, -7},
+      {0 , 1, 1},
+    }
+
+    assert.num_eq(m[1][1], -3)
+    assert.num_eq(m[2][2], -2)
+    assert.num_eq(m[3][3], 1)
+  end)
 end)
