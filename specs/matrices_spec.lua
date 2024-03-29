@@ -1,6 +1,10 @@
 local assertions = require("./assertions")
+local matrices = require("./matrices")
+local tuple = require("./tuples").tuple
+local multiply = matrices.multiply
 local num_eq = assertions.num_eq
 local matrix_eq = assertions.matrix_eq
+local tuple_eq = assertions.tuple_eq
 local say = require("say")
 
 say:set("assertion.num_eq.positive", "Expected %s \nto be equal: %s")
@@ -10,6 +14,10 @@ assert:register("assertion", "num_eq", num_eq, "assertion.num_eq.positive", "ass
 say:set("assertion.matrix_eq.positive", "Expected %s \nto be equal: %s")
 say:set("assertion.matrix_eq.negative", "Expected %s \nto not be equal: %s")
 assert:register("assertion", "matrix_eq", matrix_eq, "assertion.matrix_eq.positive", "assertion.matrix_eq.negative")
+
+say:set("assertion.tuple_eq.positive", "Expected %s \nto be equal: %s")
+say:set("assertion.tuple_eq.negative", "Expected %s \nto not be equal: %s")
+assert:register("assertion", "tuple_eq", tuple_eq, "assertion.tuple_eq.positive", "assertion.tuple_eq.negative")
 
 describe("Constructing and inspecting a matrix", function()
   it("we should be able to construct a 4x4 matrix", function()
@@ -89,5 +97,49 @@ describe("Matrix equality", function()
     }
 
     assert.are_not.matrix_eq(a, b)
+  end)
+end)
+
+describe("Multiplying matrices", function()
+  it("by another matrix", function()
+    local a = {
+      {1, 2, 3, 4},
+      {5, 6, 7, 8},
+      {9, 8, 7, 6},
+      {5, 4, 3, 2},
+    }
+
+    local b = {
+      {-2, 1, 2,  3},
+      { 3, 2, 1, -1},
+      { 4, 3, 6,  5},
+      { 1, 2, 7,  8},
+    }
+
+    local expected = {
+      {20, 22,  50,  48},
+      {44, 54, 114, 108},
+      {40, 58, 110, 102},
+      {16, 26,  46,  42},
+    }
+
+    local result = multiply(a, b)
+
+    assert.matrix_eq(result, expected)
+  end)
+
+  it("by tuple", function()
+    local a = {
+      {1, 2, 3, 4},
+      {2, 4, 4, 2},
+      {8, 6, 4, 1},
+      {0, 0, 0, 1},
+    }
+
+    local b = tuple(1, 2, 3, 1)
+
+    local expected = tuple(18, 24, 33, 1)
+    local result = multiply(a, b)
+    assert.tuple_eq(result, expected)
   end)
 end)
