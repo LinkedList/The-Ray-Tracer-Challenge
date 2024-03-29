@@ -157,4 +157,12 @@ describe("Multiplying matrices", function()
     local result = multiply(a, b)
     assert.matrix_eq(result, a)
   end)
+
+  it("identity matrix by a tuple", function()
+    local a = identity()
+    local b = tuple(18, 24, 33, 1)
+
+    local result = multiply(a, b)
+    assert.tuple_eq(result, b)
+  end)
 end)
