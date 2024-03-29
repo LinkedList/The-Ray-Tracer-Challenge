@@ -38,4 +38,14 @@ function module.multiply(a, b)
   return result
 end
 
+-- 4x4 identity matrix`
+function module.identity()
+  return {
+    {1, 0, 0, 0},
+    {0, 1, 0, 0},
+    {0, 0, 1, 0},
+    {0, 0, 0, 1},
+  }
+end
+
 return module

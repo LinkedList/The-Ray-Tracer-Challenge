@@ -2,6 +2,7 @@ local assertions = require("./assertions")
 local matrices = require("./matrices")
 local tuple = require("./tuples").tuple
 local multiply = matrices.multiply
+local identity = matrices.identity
 local num_eq = assertions.num_eq
 local matrix_eq = assertions.matrix_eq
 local tuple_eq = assertions.tuple_eq
@@ -141,5 +142,19 @@ describe("Multiplying matrices", function()
     local expected = tuple(18, 24, 33, 1)
     local result = multiply(a, b)
     assert.tuple_eq(result, expected)
+  end)
+
+  it("by identity", function()
+    local a = {
+      {1, 2, 3, 4},
+      {2, 4, 4, 2},
+      {8, 6, 4, 1},
+      {0, 0, 0, 1},
+    }
+
+    local b = identity()
+
+    local result = multiply(a, b)
+    assert.matrix_eq(result, a)
   end)
 end)
