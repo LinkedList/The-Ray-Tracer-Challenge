@@ -48,4 +48,22 @@ function module.identity()
   }
 end
 
+-- 4x4 matrix transpose
+function module.transpose(a)
+  local result = {
+    {},
+    {},
+    {},
+    {},
+  }
+
+  for row=1,4 do
+    for col=1,4 do
+      result[row][col] = a[col][row]
+    end
+  end
+
+  return result
+end
+
 return module

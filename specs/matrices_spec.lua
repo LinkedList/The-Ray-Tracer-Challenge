@@ -3,6 +3,7 @@ local matrices = require("./matrices")
 local tuple = require("./tuples").tuple
 local multiply = matrices.multiply
 local identity = matrices.identity
+local transpose = matrices.transpose
 local num_eq = assertions.num_eq
 local matrix_eq = assertions.matrix_eq
 local tuple_eq = assertions.tuple_eq
@@ -164,5 +165,31 @@ describe("Multiplying matrices", function()
 
     local result = multiply(a, b)
     assert.tuple_eq(result, b)
+  end)
+end)
+
+describe('Transposing a matrix', function()
+  it('transposes a matrix', function()
+    local a = {
+      {0, 9, 3, 0},
+      {9, 8, 0, 8},
+      {1, 8, 5, 3},
+      {0, 0, 5, 8}
+    }
+
+    local result = {
+      {0, 9, 1, 0},
+      {9, 8, 8, 0},
+      {3, 0, 5, 5},
+      {0, 8, 3, 8}
+    }
+
+    assert.matrix_eq(transpose(a), result)
+  end)
+
+  it('transposing identity matrix creates a identity matrix', function()
+    local a = identity()
+
+    assert.matrix_eq(transpose(a), identity())
   end)
 end)
