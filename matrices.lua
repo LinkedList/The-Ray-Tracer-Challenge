@@ -71,14 +71,36 @@ function module.determinant(a)
   return a[1][1] * a[2][2] - a[1][2] * a[2][1]
 end
 
-function module.submatrix(a, row, col)
-  table.remove(a, row)
+function deepcopy(orig)
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in next, orig, nil do
+            copy[deepcopy(orig_key)] = deepcopy(orig_value)
+        end
+        setmetatable(copy, deepcopy(getmetatable(orig)))
+    else -- number, string, boolean, etc
+        copy = orig
+    end
+    return copy
+end
 
-  for i in pairs(a) do
-    table.remove(a[i], col)
+function module.submatrix(a, row, col)
+  local result = deepcopy(a)
+
+  table.remove(result, row)
+
+  for i in pairs(result) do
+    table.remove(result[i], col)
   end
 
-  return a
+  return result
+end
+
+function module.minor(a, row, col)
+  local sub = module.submatrix(a, row, col)
+  return module.determinant(sub)
 end
 
 return module

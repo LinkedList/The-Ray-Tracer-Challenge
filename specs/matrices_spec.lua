@@ -6,6 +6,7 @@ local identity = matrices.identity
 local transpose = matrices.transpose
 local determinant = matrices.determinant
 local submatrix = matrices.submatrix
+local minor = matrices.minor
 local num_eq = assertions.num_eq
 local matrix_eq = assertions.matrix_eq
 local tuple_eq = assertions.tuple_eq
@@ -238,5 +239,20 @@ describe('Submatrix', function()
     }
 
     assert.matrix_eq(submatrix(a, 3, 2), result)
+  end)
+end)
+
+describe('Calculating minor', function()
+  it('of 3x3 matrix', function()
+    local a = {
+      { 3,  5,  0},
+      { 2, -1, -7},
+      { 6, -1,  5},
+    }
+
+    local b = submatrix(a, 2, 1)
+
+    assert.num_eq(determinant(b), 25)
+    assert.num_eq(minor(a, 2, 1), 25)
   end)
 end)
