@@ -71,4 +71,14 @@ function module.determinant(a)
   return a[1][1] * a[2][2] - a[1][2] * a[2][1]
 end
 
+function module.submatrix(a, row, col)
+  table.remove(a, row)
+
+  for i in pairs(a) do
+    table.remove(a[i], col)
+  end
+
+  return a
+end
+
 return module

@@ -5,6 +5,7 @@ local multiply = matrices.multiply
 local identity = matrices.identity
 local transpose = matrices.transpose
 local determinant = matrices.determinant
+local submatrix = matrices.submatrix
 local num_eq = assertions.num_eq
 local matrix_eq = assertions.matrix_eq
 local tuple_eq = assertions.tuple_eq
@@ -203,5 +204,39 @@ describe('Determinant ', function()
     }
 
     assert.num_eq(determinant(a), 17)
+  end)
+end)
+
+describe('Submatrix', function()
+  it('of 3x3 matrix', function()
+    local a = {
+      { 1, 5,  0},
+      {-3, 2,  7},
+      { 0, 6, -3},
+    }
+
+    local result = {
+      {-3, 2},
+      { 0, 6},
+    }
+
+    assert.matrix_eq(submatrix(a, 1, 3), result)
+  end)
+
+  it('of 4x4 matrix', function()
+    local a = {
+      {-6, 1,  1, 6},
+      {-8, 5,  8, 6},
+      {-1, 0,  8, 2},
+      {-7, 1, -1, 1},
+    }
+
+    local result = {
+      {-6,  1, 6},
+      {-8,  8, 6},
+      {-7, -1, 1},
+    }
+
+    assert.matrix_eq(submatrix(a, 3, 2), result)
   end)
 end)
