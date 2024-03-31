@@ -4,6 +4,7 @@ local tuple = require("./tuples").tuple
 local multiply = matrices.multiply
 local identity = matrices.identity
 local transpose = matrices.transpose
+local determinant = matrices.determinant
 local num_eq = assertions.num_eq
 local matrix_eq = assertions.matrix_eq
 local tuple_eq = assertions.tuple_eq
@@ -191,5 +192,16 @@ describe('Transposing a matrix', function()
     local a = identity()
 
     assert.matrix_eq(transpose(a), identity())
+  end)
+end)
+
+describe('Determinant ', function()
+  it('of a 2x2 matrix', function()
+    local a = {
+      { 1, 5},
+      {-3, 2},
+    }
+
+    assert.num_eq(determinant(a), 17)
   end)
 end)

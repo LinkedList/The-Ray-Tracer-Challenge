@@ -66,4 +66,9 @@ function module.transpose(a)
   return result
 end
 
+-- determinant for a 2x2 matrix
+function module.determinant(a)
+  return a[1][1] * a[2][2] - a[1][2] * a[2][1]
+end
+
 return module
